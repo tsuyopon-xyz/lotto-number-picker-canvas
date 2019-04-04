@@ -15,14 +15,6 @@
   // Set the image paths.
   const IMAGE_PATH = "images/numbers.png";
 
-  // Set the current indexes.
-  // let currentIndex1 = 0;
-  // let currentIndex2 = 0;
-  // let currentIndex3 = 0;
-  // let currentIndex4 = 0;
-  // let currentIndex5 = 0;
-  // let currentIndex6 = 0;
-
   // Set index1 to index6 for when "stop" button pressed
   let index1 = 0;
   let index2 = 0;
@@ -57,13 +49,6 @@
 
   // Main function for this app.
   function main() {
-    // currentIndex1 = 0;
-    // currentIndex2 = 0;
-    // currentIndex3 = 0;
-    // currentIndex4 = 0;
-    // currentIndex5 = 0;
-    // currentIndex6 = 0;
-
     restartButton.addEventListener("click", () => {
       window.location.reload();
     });
