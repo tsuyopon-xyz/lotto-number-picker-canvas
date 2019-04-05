@@ -13,7 +13,7 @@
   const ONE_SECOND = 1000;
 
   // Set the image paths.
-  const IMAGE_PATH = "images/numbers1.png";
+  const IMAGE_PATH = "images/numbers.png";
 
   // Set index1 to index6 for when "stop" button pressed
   let index1 = 0;
@@ -54,12 +54,12 @@
     });
 
     imageObj.onload = () => {
-      draw(numberCanvas1, numberContext1, imageObj, currentIndex1, SPEED[0]);
-      draw(numberCanvas2, numberContext2, imageObj, currentIndex2, SPEED[1]);
-      draw(numberCanvas3, numberContext3, imageObj, currentIndex3, SPEED[2]);
-      draw(numberCanvas4, numberContext4, imageObj, currentIndex4, SPEED[3]);
-      draw(numberCanvas5, numberContext5, imageObj, currentIndex5, SPEED[4]);
-      draw(numberCanvas6, numberContext6, imageObj, currentIndex6, SPEED[5]);
+      draw(numberCanvas1, numberContext1, imageObj, SPEED[0]);
+      draw(numberCanvas2, numberContext2, imageObj, SPEED[1]);
+      draw(numberCanvas3, numberContext3, imageObj, SPEED[2]);
+      draw(numberCanvas4, numberContext4, imageObj, SPEED[3]);
+      draw(numberCanvas5, numberContext5, imageObj, SPEED[4]);
+      draw(numberCanvas6, numberContext6, imageObj, SPEED[5]);
 
       stopButton.addEventListener("click", () => {
         // Set array for each index when "stop" button pressed.
@@ -69,7 +69,6 @@
         const duplicatedIndexes = indexes.filter((x, i, self) => {
           return self.indexOf(x) !== i;
         });
-        console.log(duplicatedIndexes);
         if (duplicatedIndexes.length === 0) {
           isPaused = true;
         } else {
@@ -81,7 +80,8 @@
   }
 
   // Function for drawing the image on each canvas repeatedly.
-  function draw(canvas, context, imageObject, currentIndex, speed) {
+  function draw(canvas, context, imageObject, speed) {
+    let currentIndex = 0;
     function loop() {
       if (!isPaused) {
         const sx = 20;
