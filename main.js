@@ -80,7 +80,6 @@
   }
 
   // Function for drawing the image on each canvas repeatedly.
-  // function draw(canvas, context, imageObject, speed) {
   function draw(canvas, context, currentFrame) {
     // currentFrame === 39のとき : 39 % 40 → 39 (インデックス番号39)
     // currentFrame === 40のとき : 40 % 40 → 0 (インデックス番号0)
