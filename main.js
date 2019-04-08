@@ -8,7 +8,7 @@
   let isPaused = false;
 
   // Set how fast the image changes. Smaller number means faster.
-  const SPEED = [30, 40, 10, 5, 200, 5];
+  const SPEED = [10, 5, 10, 5, 10, 5];
 
   const ONE_SECOND = 1000;
 
@@ -49,32 +49,20 @@
 
   // Main function for this app.
   function main() {
+    implementDraw();
+
     restartButton.addEventListener("click", () => {
       window.location.reload();
     });
 
     imageObj.onload = () => {
-      draw(numberCanvas1, numberContext1, imageObj, SPEED[0]);
-      draw(numberCanvas2, numberContext2, imageObj, SPEED[1]);
-      draw(numberCanvas3, numberContext3, imageObj, SPEED[2]);
-      draw(numberCanvas4, numberContext4, imageObj, SPEED[3]);
-      draw(numberCanvas5, numberContext5, imageObj, SPEED[4]);
-      draw(numberCanvas6, numberContext6, imageObj, SPEED[5]);
-
       stopButton.addEventListener("click", () => {
         // Set array for each index when "stop" button pressed.
-        const indexes = [index1, index2, index3, index4, index5, index6];
+        let indexes = [index1, index2, index3, index4, index5, index6]; // Check for duplicated numbers.
 
-        // Check for duplicated numbers.
-        const duplicatedIndexes = indexes.filter((x, i, self) => {
-          return self.indexOf(x) !== i;
-        });
-        if (duplicatedIndexes.length === 0) {
-          isPaused = true;
-        } else {
-          fixDuplication(indexes, duplicatedIndexes);
-          isPaused = true;
-        }
+        fixDuplication(indexes);
+
+        isPaused = true;
       });
     };
   }
@@ -146,34 +134,38 @@
     );
   }
 
-  // Change a duplicated number to an other random number.
-  function fixDuplication(indexes, duplicatedIndexes) {
-    // Find out the index of duplicated number in indexes array.
-    const num = indexes.indexOf(duplicatedIndexes[0]);
+  function implementDraw() {
+    draw(numberCanvas1, numberContext1, imageObj, SPEED[0]);
+    draw(numberCanvas2, numberContext2, imageObj, SPEED[1]);
+    draw(numberCanvas3, numberContext3, imageObj, SPEED[2]);
+    draw(numberCanvas4, numberContext4, imageObj, SPEED[3]);
+    draw(numberCanvas5, numberContext5, imageObj, SPEED[4]);
+    draw(numberCanvas6, numberContext6, imageObj, SPEED[5]);
+  }
 
-    // Declare max number for Math.floor function and new index.
+  function fixDuplication(indexes) {
+    let newIndexes = [];
     const max = NO_OF_NUM - 1;
-    let newIndex;
 
-    // Set a new index which does not duplicate with any other numbers on the canvases.
-    while (newIndex === undefined || indexes[newIndex] >= 0) {
-      newIndex = Math.floor(Math.random() * Math.floor(max));
+    // Keep pushing random numbers until the indexes array has no more duplicated values.
+    while (newIndexes.length < 7) {
+      // Remove duplicated values.
+      newIndexes = indexes.filter((x, i, self) => {
+        return self.indexOf(x) === i;
+      });
+      indexes = newIndexes;
+
+      // Push random numbers into the indexes array.
+      indexes.push(Math.floor(Math.random() * Math.floor(max)));
     }
 
-    // Draw image for the canvas where duplicated number is.
-    if (num === 0) {
-      drawAgain(numberCanvas1, numberContext1, imageObj, newIndex);
-    } else if (num === 1) {
-      drawAgain(numberCanvas2, numberContext2, imageObj, newIndex);
-    } else if (num === 2) {
-      drawAgain(numberCanvas3, numberContext3, imageObj, newIndex);
-    } else if (num === 3) {
-      drawAgain(numberCanvas4, numberContext4, imageObj, newIndex);
-    } else if (num === 4) {
-      drawAgain(numberCanvas5, numberContext5, imageObj, newIndex);
-    } else if (num === 5) {
-      drawAgain(numberCanvas6, numberContext6, imageObj, newIndex);
-    }
+    // Draw images on canvas without any duplicated values.
+    drawAgain(numberCanvas1, numberContext1, imageObj, indexes[0]);
+    drawAgain(numberCanvas2, numberContext2, imageObj, indexes[1]);
+    drawAgain(numberCanvas3, numberContext3, imageObj, indexes[2]);
+    drawAgain(numberCanvas4, numberContext4, imageObj, indexes[3]);
+    drawAgain(numberCanvas5, numberContext5, imageObj, indexes[4]);
+    drawAgain(numberCanvas6, numberContext6, imageObj, indexes[5]);
   }
 
   main();
